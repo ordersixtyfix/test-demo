@@ -1,11 +1,16 @@
 pipeline {
-    agent any
+     agent {
+            docker {
+                image 'maven:3.8.6-jdk-11'
+                args '-v $HOME/.m2:/root/.m2' // Opsiyonel: yerel Maven repository cache kullanmak için
+            }
+        }
 
     stages {
         stage('Checkout') {
             steps {
                 // Örneğin, Git reposundan kodu çekiyoruz.
-                git url: 'https://github.com/kullaniciAdi/projeAdi.git', branch: 'main'
+                git branch: 'main', url: 'https://github.com/ordersixtyfix/test-demo.git'
             }
         }
         stage('Build') {
